@@ -10,7 +10,13 @@
     "device": "PC",
     "youtube": "",
     "region": "EU",
-    "status": "active"
+    "status": "active",
+    "history": {
+      "bounce": {"value": 85, "period": "week", "date": "2026-07-25"},
+      "nobounce": {"value": 70, "period": "day", "date": "2026-07-31"},
+      "consistency": {"value": 67, "period": "week", "date": "2026-07-25"},
+      "cam": {"value": 84, "period": "month", "date": "2026-07-01"}
+    }
   },
   {
     "id": "1391454669",
@@ -23,6 +29,12 @@
     "device": "PC",
     "youtube": "https://www.youtube.com/@SemiAutomaticFire",
     "region": "NA",
-    "status": "active"
+    "status": "active",
+    "history": {
+      "bounce": {"value": 74, "period": "week", "date": "2026-07-25"},
+      "nobounce": {"value": 69, "period": "day", "date": "2026-07-31"},
+      "consistency": {"value": 60, "period": "week", "date": "2026-07-25"},
+      "cam": {"value": 87, "period": "month", "date": "2026-07-01"}
+    }
   }
 ]
