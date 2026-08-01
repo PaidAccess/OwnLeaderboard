@@ -87,29 +87,25 @@ body {
   border-color: var(--border-h);
 }
 
-.player-rank {
-  width: 70px;
-  height: 70px;
+.player-avatar {
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   border: 2px solid var(--border);
   margin: 0 auto 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #ffffff;
+  display: block;
+  object-fit: cover;
+  background: var(--card);
 }
 
-.player-card:nth-child(1) .player-rank {
+.player-card:nth-child(1) .player-avatar {
   border-color: rgba(255, 215, 0, 0.5);
-  color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
 }
 
-.player-card:nth-child(2) .player-rank {
+.player-card:nth-child(2) .player-avatar {
   border-color: rgba(192, 192, 192, 0.5);
-  color: #c0c0c0;
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.2);
 }
 
 .player-name {
@@ -343,6 +339,7 @@ const STATS = [
 ];
 
 let players = [];
+const avatarCache = {};
 
 function total(p) {
   return (p.bounce || 0) + (p.nobounce || 0) + (p.consistency || 0) + (p.cam || 0);
@@ -367,13 +364,34 @@ function diffHTML(player, stat) {
   return `<span class="stat-diff ${cls}">${sign}${d} than ${period} ago</span>`;
 }
 
+async function loadAvatars() {
+  const ids = players.map(p => p.id).filter(id => !avatarCache[id]);
+  if (ids.length === 0) return;
+  
+  try {
+    const res = await fetch(`https://thumbnails.roproxy.com/v1/users/avatar-headshot?userIds=${ids.join(',')}&size=150x150&format=Png&isCircular=true`);
+    const data = await res.json();
+    if (data.data) {
+      data.data.forEach(x => {
+        avatarCache[x.targetId] = x.imageUrl;
+      });
+    }
+  } catch (e) {
+    console.log('Avatar load failed');
+  }
+}
+
+function getAvatar(id) {
+  return avatarCache[id] || '';
+}
+
 function render() {
   players.sort((a, b) => total(b) - total(a));
 
   // Player cards
   document.getElementById('players-grid').innerHTML = players.map((p, i) => `
     <div class="player-card">
-      <div class="player-rank">#${i + 1}</div>
+      <img class="player-avatar" src="${getAvatar(p.id)}" alt="${p.name}" onerror="this.style.display='none'">
       <div class="player-name">@${p.name}</div>
       <div class="player-display">${p.display || p.name}</div>
       <div class="player-total">${total(p)}</div>
@@ -428,6 +446,7 @@ async function init() {
   try {
     const res = await fetch('players.json', { cache: 'no-store' });
     players = await res.json();
+    await loadAvatars();
     render();
   } catch (err) {
     document.getElementById('players-grid').innerHTML = `
