@@ -20,13 +20,11 @@
   --border: rgba(255, 255, 255, 0.1);
   --border-h: rgba(255, 255, 255, 0.2);
   --accent: #ffffff;
-  --accent-s: rgba(255, 255, 255, 0.1);
   --green: #00ff88;
   --green-s: rgba(0, 255, 136, 0.1);
   --red: #ff4444;
   --red-s: rgba(255, 68, 68, 0.1);
   --gold: #ffd700;
-  --gold-s: rgba(255, 215, 0, 0.1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,15 +34,13 @@ body {
   color: var(--text);
   min-height: 100vh;
   background: #000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 20px;
 }
 
 .container {
   width: 100%;
   max-width: 1000px;
+  margin: 0 auto;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -94,9 +90,9 @@ body {
   box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
 }
 
-.player-rank-indicator {
-  width: 80px;
-  height: 80px;
+.player-rank {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   border: 2px solid var(--border);
   margin: 0 auto 15px;
@@ -104,7 +100,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Rajdhani', sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   background: var(--surface-alt);
   color: #ffffff;
@@ -139,6 +135,19 @@ body {
   letter-spacing: 0.1em;
 }
 
+.period-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  margin-top: 10px;
+}
+
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -158,6 +167,8 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
 }
 
 .category-name {
@@ -172,7 +183,7 @@ body {
 .players-compare {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  gap: 10px;
+  gap: 15px;
   align-items: start;
 }
 
@@ -180,47 +191,41 @@ body {
   text-align: center;
 }
 
-.stat-value {
+.stat-current {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #ffffff;
 }
 
-.stat-history {
+.stat-previous {
   font-size: 0.75rem;
   color: var(--muted);
-  margin-top: 3px;
-}
-
-.stat-previous {
-  font-size: 0.8rem;
-  color: var(--muted);
   text-decoration: line-through;
-  opacity: 0.6;
+  margin-top: 2px;
 }
 
 .stat-change {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  margin-top: 5px;
-  padding: 3px 8px;
+  font-size: 0.75rem;
+  margin-top: 6px;
+  padding: 4px 10px;
   border-radius: 5px;
   display: inline-block;
-  line-height: 1.4;
+  font-weight: 700;
 }
 
-.stat-change.positive {
+.stat-change.better {
   color: var(--green);
   background: var(--green-s);
 }
 
-.stat-change.negative {
+.stat-change.worse {
   color: var(--red);
   background: var(--red-s);
 }
 
-.stat-change.neutral {
+.stat-change.same {
   color: var(--muted);
   background: rgba(255, 255, 255, 0.05);
 }
@@ -230,7 +235,7 @@ body {
   font-size: 1.2rem;
   font-weight: 700;
   color: var(--muted);
-  padding-top: 10px;
+  padding-top: 20px;
 }
 
 .overall-comparison {
@@ -238,18 +243,18 @@ body {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 25px;
-  text-align: center;
   margin-bottom: 20px;
 }
 
 .overall-title {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
+  text-align: center;
 }
 
 .progress-bars {
@@ -278,13 +283,12 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   overflow: hidden;
-  position: relative;
 }
 
 .progress-bar {
   height: 100%;
   border-radius: 15px;
-  transition: width 1s ease;
+  transition: width 0.8s ease;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -292,11 +296,11 @@ body {
 }
 
 .progress-bar.p1 {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.4));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
 }
 
 .progress-bar.p2 {
-  background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.4));
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.5));
 }
 
 .progress-value {
@@ -306,29 +310,16 @@ body {
   color: #ffffff;
 }
 
-.weekly-delta {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
-  border-radius: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-top: 10px;
-}
-
 .edit-section {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 25px;
-  margin-bottom: 20px;
 }
 
 .edit-title {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 20px;
@@ -352,42 +343,72 @@ body {
 
 .edit-player-name {
   font-family: 'Rajdhani', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 15px;
 }
 
 .edit-field {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .edit-label {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
-.edit-input-group {
+.edit-row {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
+.edit-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.edit-btn.add {
+  border-color: rgba(0, 255, 136, 0.3);
+  color: var(--green);
+}
+
+.edit-btn.add:hover {
+  background: rgba(0, 255, 136, 0.15);
+}
+
+.edit-btn.sub {
+  border-color: rgba(255, 68, 68, 0.3);
+  color: var(--red);
+}
+
+.edit-btn.sub:hover {
+  background: rgba(255, 68, 68, 0.15);
+}
+
 .edit-input {
-  flex: 1;
+  width: 55px;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border);
   color: #ffffff;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 6px 8px;
+  border-radius: 5px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  text-align: center;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 .edit-input:focus {
@@ -398,88 +419,32 @@ body {
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--border);
   color: #ffffff;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 6px 8px;
+  border-radius: 5px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   outline: none;
   cursor: pointer;
-  min-width: 90px;
 }
 
-.edit-select:focus {
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.edit-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: #ffffff;
-}
-
-.edit-btn.add {
-  background: rgba(0, 255, 136, 0.1);
-  border-color: rgba(0, 255, 136, 0.3);
-}
-
-.edit-btn.add:hover {
-  background: rgba(0, 255, 136, 0.2);
-}
-
-.edit-btn.subtract {
-  background: rgba(255, 68, 68, 0.1);
-  border-color: rgba(255, 68, 68, 0.3);
-}
-
-.edit-btn.subtract:hover {
-  background: rgba(255, 68, 68, 0.2);
-}
-
-.update-btn {
+.apply-btn {
   width: 100%;
-  padding: 15px;
+  padding: 14px;
   background: #ffffff;
   color: #000000;
   border: none;
   border-radius: 10px;
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
-.update-btn:hover {
+.apply-btn:hover {
   background: #e0e0e0;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
-}
-
-.reset-btn {
-  width: 100%;
-  padding: 12px;
-  background: transparent;
-  color: var(--muted);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-top: 10px;
-}
-
-.reset-btn:hover {
-  border-color: rgba(255, 68, 68, 0.3);
-  color: #ff4444;
 }
 
 @media (max-width: 768px) {
@@ -509,205 +474,166 @@ body {
   </div>
 
   <div class="edit-section">
-    <div class="edit-title">Edit Stats</div>
+    <div class="edit-title">Quick Edit</div>
     <div class="edit-grid" id="edit-grid"></div>
-    <button class="update-btn" id="apply-changes-btn">APPLY CHANGES & DOWNLOAD JSON</button>
-    <button class="reset-btn" id="reset-btn">RESET TO ORIGINAL</button>
+    <button class="apply-btn" id="download-btn">DOWNLOAD UPDATED JSON</button>
   </div>
 </div>
 
 <script>
-const PLAYERS_FILE = 'players.json';
-
 let playersData = [];
-let originalData = [];
-
 const PERIODS = ['day', 'week', 'month', 'year'];
+const STATS = ['bounce', 'nobounce', 'consistency', 'cam'];
+const STAT_NAMES = ['Bounce', 'No Bounce', 'Consistency', 'Camera'];
 
-function calculateOverall(player) {
-  return (player.bounce || 0) + (player.nobounce || 0) + (player.consistency || 0) + (player.cam || 0);
+function calcTotal(p) {
+  return (p.bounce || 0) + (p.nobounce || 0) + (p.consistency || 0) + (p.cam || 0);
 }
 
-function getHistoryText(player, key) {
-  if (!player.history || !player.history[key]) return '';
-  const h = player.history[key];
-  const current = player[key] || 0;
-  const previous = h.value || 0;
-  const diff = current - previous;
-  const period = h.period || 'week';
-  
-  if (diff === 0) return `<span style="color:var(--muted)">No change</span>`;
-  
-  const changeText = diff > 0 ? `+${diff} better` : `${diff} worse`;
-  return `<span style="color:${diff > 0 ? 'var(--green)' : 'var(--red)'};font-weight:600">${changeText} than ${period} ago</span>`;
+function getDiff(player, stat) {
+  const prevKey = 'prev_' + stat;
+  const current = player[stat] || 0;
+  const previous = player[prevKey] !== undefined ? player[prevKey] : current;
+  return current - previous;
 }
 
-function renderPlayerCard(player, index) {
-  const overall = calculateOverall(player);
+function getChangeHTML(player, stat) {
+  const diff = getDiff(player, stat);
+  const period = player.period || 'week';
   
-  return `
-    <div class="player-card">
-      <div class="player-rank-indicator">#${index + 1}</div>
-      <div class="player-name">@${player.name}</div>
-      <div class="player-display">${player.display || player.name}</div>
-      <div class="player-score">${overall}</div>
-      <div class="player-score-label">Total Score / 400</div>
-    </div>
-  `;
+  if (diff === 0) {
+    return '<span class="stat-change same">No change</span>';
+  }
+  
+  const cls = diff > 0 ? 'better' : 'worse';
+  const sign = diff > 0 ? '+' : '';
+  return `<span class="stat-change ${cls}">${sign}${diff} than ${period} ago</span>`;
 }
 
-function renderCategoryComparison(category, key) {
-  if (playersData.length < 2) return '';
+function renderAll() {
+  // Sort by total
+  playersData.sort((a, b) => calcTotal(b) - calcTotal(a));
   
-  const p1 = playersData[0];
-  const p2 = playersData[1];
-  
-  return `
-    <div class="category-card">
-      <div class="category-header">
-        <span class="category-name">${category}</span>
-        <span style="font-size:0.8rem;color:var(--muted)">/ 100</span>
+  // Player cards
+  document.getElementById('players-grid').innerHTML = playersData.map((p, i) => {
+    const total = calcTotal(p);
+    return `
+      <div class="player-card">
+        <div class="player-rank">#${i + 1}</div>
+        <div class="player-name">@${p.name}</div>
+        <div class="player-display">${p.display || p.name}</div>
+        <div class="player-score">${total}</div>
+        <div class="player-score-label">Total Score / 400</div>
+        <div class="period-badge">${p.period || 'week'}</div>
       </div>
-      <div class="players-compare">
-        <div class="player-stat">
-          <div class="stat-value">${p1[key] || 0}</div>
-          <div class="stat-history">${getHistoryText(p1, key)}</div>
-          ${p1.history?.[key] ? `<div class="stat-previous">Was ${p1.history[key].value}</div>` : ''}
-        </div>
-        <div class="vs-divider">VS</div>
-        <div class="player-stat">
-          <div class="stat-value">${p2[key] || 0}</div>
-          <div class="stat-history">${getHistoryText(p2, key)}</div>
-          ${p2.history?.[key] ? `<div class="stat-previous">Was ${p2.history[key].value}</div>` : ''}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderProgressBars() {
-  if (playersData.length < 2) return '';
+    `;
+  }).join('');
   
-  const p1 = playersData[0];
-  const p2 = playersData[1];
-  const p1Overall = calculateOverall(p1);
-  const p2Overall = calculateOverall(p2);
-  const maxScore = 400;
-  
-  const p1Percent = Math.min(100, (p1Overall / maxScore) * 100);
-  const p2Percent = Math.min(100, (p2Overall / maxScore) * 100);
-  
-  return `
-    <div class="progress-item">
-      <div class="progress-label">${p1.name}</div>
-      <div class="progress-bar-container">
-        <div class="progress-bar p1" style="width:${p1Percent}%">
-          <span class="progress-value">${p1Overall}/400</span>
+  // Category comparisons
+  document.getElementById('categories-grid').innerHTML = STATS.map((stat, idx) => {
+    if (playersData.length < 2) return '';
+    const p1 = playersData[0];
+    const p2 = playersData[1];
+    
+    return `
+      <div class="category-card">
+        <div class="category-header">
+          <span class="category-name">${STAT_NAMES[idx]}</span>
+          <span style="font-size:0.7rem;color:var(--muted)">/ 100</span>
         </div>
-      </div>
-    </div>
-    <div class="progress-item">
-      <div class="progress-label">${p2.name}</div>
-      <div class="progress-bar-container">
-        <div class="progress-bar p2" style="width:${p2Percent}%">
-          <span class="progress-value">${p2Overall}/400</span>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function renderEditSection() {
-  const categories = [
-    { name: 'Bounce', key: 'bounce' },
-    { name: 'No Bounce', key: 'nobounce' },
-    { name: 'Consistency', key: 'consistency' },
-    { name: 'Camera', key: 'cam' }
-  ];
-  
-  document.getElementById('edit-grid').innerHTML = playersData.map((player, pIndex) => `
-    <div class="edit-player">
-      <div class="edit-player-name">${player.name}</div>
-      ${categories.map(cat => {
-        const history = player.history?.[cat.key] || {};
-        return `
-          <div class="edit-field">
-            <div class="edit-label">${cat.name}: ${player[cat.key]}</div>
-            <div class="edit-input-group">
-              <button class="edit-btn subtract" onclick="adjustStat(${pIndex}, '${cat.key}', -5)">-5</button>
-              <button class="edit-btn subtract" onclick="adjustStat(${pIndex}, '${cat.key}', -1)">-1</button>
-              <input class="edit-input" type="number" value="${player[cat.key]}" min="0" max="100" 
-                     onchange="setStat(${pIndex}, '${cat.key}', parseInt(this.value))" id="input-${pIndex}-${cat.key}">
-              <button class="edit-btn add" onclick="adjustStat(${pIndex}, '${cat.key}', 1)">+1</button>
-              <button class="edit-btn add" onclick="adjustStat(${pIndex}, '${cat.key}', 5)">+5</button>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:6px;align-items:center;">
-              <span style="font-size:0.7rem;color:var(--muted);">Compare to:</span>
-              <input type="number" value="${history.value || player[cat.key]}" 
-                     style="width:60px;background:rgba(0,0,0,0.5);border:1px solid var(--border);color:#fff;padding:4px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;"
-                     onchange="setHistoryValue(${pIndex}, '${cat.key}', parseInt(this.value))" 
-                     id="hist-val-${pIndex}-${cat.key}">
-              <select class="edit-select" onchange="setHistoryPeriod(${pIndex}, '${cat.key}', this.value)" id="hist-period-${pIndex}-${cat.key}">
-                ${PERIODS.map(p => `<option value="${p}" ${(history.period || 'week') === p ? 'selected' : ''}>${p}</option>`).join('')}
-              </select>
-              <span style="font-size:0.7rem;color:var(--muted);">ago</span>
-            </div>
+        <div class="players-compare">
+          <div class="player-stat">
+            <div class="stat-current">${p1[stat] || 0}</div>
+            <div class="stat-previous">Was ${p1['prev_' + stat] !== undefined ? p1['prev_' + stat] : p1[stat]}</div>
+            ${getChangeHTML(p1, stat)}
           </div>
-        `;
-      }).join('')}
+          <div class="vs-divider">VS</div>
+          <div class="player-stat">
+            <div class="stat-current">${p2[stat] || 0}</div>
+            <div class="stat-previous">Was ${p2['prev_' + stat] !== undefined ? p2['prev_' + stat] : p2[stat]}</div>
+            ${getChangeHTML(p2, stat)}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  // Progress bars
+  document.getElementById('progress-bars').innerHTML = playersData.map((p, i) => {
+    const total = calcTotal(p);
+    const pct = Math.min(100, (total / 400) * 100);
+    return `
+      <div class="progress-item">
+        <div class="progress-label">${p.name}</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar p${i + 1}" style="width:${pct}%">
+            <span class="progress-value">${total}/400</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  // Edit section
+  document.getElementById('edit-grid').innerHTML = playersData.map((p, pIdx) => `
+    <div class="edit-player">
+      <div class="edit-player-name">${p.name}</div>
+      ${STATS.map((stat, sIdx) => `
+        <div class="edit-field">
+          <div class="edit-label">${STAT_NAMES[sIdx]}: <strong>${p[stat] || 0}</strong> (was ${p['prev_' + stat] !== undefined ? p['prev_' + stat] : '?'})</div>
+          <div class="edit-row">
+            <button class="edit-btn sub" onclick="changeStat(${pIdx}, '${stat}', -5)">-5</button>
+            <button class="edit-btn sub" onclick="changeStat(${pIdx}, '${stat}', -1)">-1</button>
+            <input class="edit-input" type="number" value="${p[stat] || 0}" min="0" max="100" 
+                   onchange="setStat(${pIdx}, '${stat}', this.value)" id="inp-${pIdx}-${stat}">
+            <button class="edit-btn add" onclick="changeStat(${pIdx}, '${stat}', 1)">+1</button>
+            <button class="edit-btn add" onclick="changeStat(${pIdx}, '${stat}', 5)">+5</button>
+          </div>
+        </div>
+      `).join('')}
+      <div style="margin-top:15px;padding-top:15px;border-top:1px solid var(--border);">
+        <div class="edit-label">Time Period</div>
+        <select class="edit-select" onchange="setPeriod(${pIdx}, this.value)" style="width:100%;">
+          ${PERIODS.map(per => `<option value="${per}" ${(p.period || 'week') === per ? 'selected' : ''}>${per}</option>`).join('')}
+        </select>
+        <div class="edit-label" style="margin-top:10px;">Previous Values</div>
+        ${STATS.map((stat, sIdx) => `
+          <div class="edit-row" style="margin-top:4px;">
+            <span style="font-size:0.7rem;color:var(--muted);min-width:80px;">${STAT_NAMES[sIdx]}:</span>
+            <input class="edit-input" type="number" value="${p['prev_' + stat] !== undefined ? p['prev_' + stat] : p[stat]}" min="0" max="100"
+                   onchange="setPrev(${pIdx}, '${stat}', this.value)" id="prev-${pIdx}-${stat}">
+          </div>
+        `).join('')}
+      </div>
     </div>
   `).join('');
 }
 
-function adjustStat(playerIndex, key, delta) {
-  const current = playersData[playerIndex][key] || 0;
-  const newVal = Math.max(0, Math.min(100, current + delta));
-  playersData[playerIndex][key] = newVal;
-  document.getElementById(`input-${playerIndex}-${key}`).value = newVal;
+function changeStat(pIdx, stat, delta) {
+  const cur = playersData[pIdx][stat] || 0;
+  const newVal = Math.max(0, Math.min(100, cur + delta));
+  playersData[pIdx][stat] = newVal;
+  document.getElementById(`inp-${pIdx}-${stat}`).value = newVal;
   renderAll();
 }
 
-function setStat(playerIndex, key, value) {
-  if (isNaN(value)) return;
-  const clamped = Math.max(0, Math.min(100, value));
-  playersData[playerIndex][key] = clamped;
+function setStat(pIdx, stat, val) {
+  val = parseInt(val);
+  if (isNaN(val)) return;
+  playersData[pIdx][stat] = Math.max(0, Math.min(100, val));
   renderAll();
 }
 
-function setHistoryValue(playerIndex, key, value) {
-  if (isNaN(value)) return;
-  if (!playersData[playerIndex].history) playersData[playerIndex].history = {};
-  if (!playersData[playerIndex].history[key]) playersData[playerIndex].history[key] = {};
-  playersData[playerIndex].history[key].value = value;
-  playersData[playerIndex].history[key].date = new Date().toISOString().split('T')[0];
+function setPrev(pIdx, stat, val) {
+  val = parseInt(val);
+  if (isNaN(val)) return;
+  playersData[pIdx]['prev_' + stat] = Math.max(0, Math.min(100, val));
   renderAll();
 }
 
-function setHistoryPeriod(playerIndex, key, period) {
-  if (!playersData[playerIndex].history) playersData[playerIndex].history = {};
-  if (!playersData[playerIndex].history[key]) playersData[playerIndex].history[key] = {};
-  playersData[playerIndex].history[key].period = period;
+function setPeriod(pIdx, period) {
+  playersData[pIdx].period = period;
   renderAll();
-}
-
-function renderAll() {
-  playersData.sort((a, b) => calculateOverall(b) - calculateOverall(a));
-  
-  document.getElementById('players-grid').innerHTML = playersData.map((p, i) => renderPlayerCard(p, i)).join('');
-  
-  const categories = [
-    { name: 'Bounce', key: 'bounce' },
-    { name: 'No Bounce', key: 'nobounce' },
-    { name: 'Consistency', key: 'consistency' },
-    { name: 'Camera', key: 'cam' }
-  ];
-  
-  document.getElementById('categories-grid').innerHTML = categories
-    .map(c => renderCategoryComparison(c.name, c.key))
-    .join('');
-  
-  document.getElementById('progress-bars').innerHTML = renderProgressBars();
-  renderEditSection();
 }
 
 function downloadJSON() {
@@ -720,32 +646,13 @@ function downloadJSON() {
   URL.revokeObjectURL(url);
 }
 
-function resetData() {
-  playersData = JSON.parse(JSON.stringify(originalData));
-  renderAll();
-}
-
 async function init() {
   try {
-    const response = await fetch(PLAYERS_FILE, { cache: 'no-store' });
-    playersData = await response.json();
-    originalData = JSON.parse(JSON.stringify(playersData));
-    
+    const res = await fetch('players.json', { cache: 'no-store' });
+    playersData = await res.json();
     renderAll();
-    
-    document.getElementById('apply-changes-btn').addEventListener('click', () => {
-      downloadJSON();
-      alert('Changes saved! Replace your players.json with the downloaded file.');
-    });
-    
-    document.getElementById('reset-btn').addEventListener('click', () => {
-      if (confirm('Reset all stats to original values?')) {
-        resetData();
-      }
-    });
-    
+    document.getElementById('download-btn').onclick = downloadJSON;
   } catch (err) {
-    console.error('Error loading data:', err);
     document.getElementById('players-grid').innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">
         <p>Create a players.json file to get started</p>
