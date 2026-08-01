@@ -7,16 +7,14 @@
     "nobounce": 73,
     "consistency": 62,
     "cam": 79,
+    "prev_bounce": 85,
+    "prev_nobounce": 70,
+    "prev_consistency": 67,
+    "prev_cam": 84,
+    "period": "week",
     "device": "PC",
-    "youtube": "",
     "region": "EU",
-    "status": "active",
-    "history": {
-      "bounce": {"value": 85, "period": "week", "date": "2026-07-25"},
-      "nobounce": {"value": 70, "period": "day", "date": "2026-07-31"},
-      "consistency": {"value": 67, "period": "week", "date": "2026-07-25"},
-      "cam": {"value": 84, "period": "month", "date": "2026-07-01"}
-    }
+    "status": "active"
   },
   {
     "id": "1391454669",
@@ -26,15 +24,13 @@
     "nobounce": 74,
     "consistency": 62,
     "cam": 89,
+    "prev_bounce": 74,
+    "prev_nobounce": 69,
+    "prev_consistency": 60,
+    "prev_cam": 87,
+    "period": "day",
     "device": "PC",
-    "youtube": "https://www.youtube.com/@SemiAutomaticFire",
     "region": "NA",
-    "status": "active",
-    "history": {
-      "bounce": {"value": 74, "period": "week", "date": "2026-07-25"},
-      "nobounce": {"value": 69, "period": "day", "date": "2026-07-31"},
-      "consistency": {"value": 60, "period": "week", "date": "2026-07-25"},
-      "cam": {"value": 87, "period": "month", "date": "2026-07-01"}
-    }
+    "status": "active"
   }
 ]
